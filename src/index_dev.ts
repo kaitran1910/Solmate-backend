@@ -13,7 +13,7 @@ import { PORT_NUMBER } from "./config";
 
 // Import the router from the `./services` module
 //  const  { router } = require("./services");
-import { router } from "./services";
+import router from "./services/routes";
 
 // create express app
 const app = express();
