@@ -15,15 +15,23 @@ import { PORT_NUMBER } from "./config";
 //  const  { router } = require("./services");
 import router from "./services/routes";
 
-// Attempt to establish a database connection before starting the server
+// Middleware for logging requests
+function requestLoggerMiddleware(
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+): void {
+  logger.info(`Request: ${req.method} ${req.url}`);
+  next();
+}
+
 createConnection()
   .then(async (connection) => {
     const app = express();
 
-    // create express app
     app.use(bodyParser.json());
     app.use(cors());
-    // app.use(logger);
+    app.use(requestLoggerMiddleware);
 
     // Incorrectly way to mount the router at the root path ("/")
     // app.set('/', router);
